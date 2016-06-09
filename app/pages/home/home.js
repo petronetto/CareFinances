@@ -1,6 +1,5 @@
 import {Page} from 'ionic-angular';
 
-
 @Page({
   templateUrl: 'build/pages/home/home.html'
 })
@@ -10,6 +9,6 @@ export class HomePage {
   }
 
   getNome() {
-      return 'Retonado de: ' + this.title; 
+      return 'Retornado de: ' + this.title;
   }
 }
