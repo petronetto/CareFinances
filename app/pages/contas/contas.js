@@ -14,7 +14,11 @@ export class ContasPage {
 
     constructor(nav) {
         this.dao = new DAOContas();
-        this.listContas = this.dao.getList();
+
+        this.dao.getList((lista) => {
+            this.listContas = lista;
+        });
+
         this.nav = nav;
     }
 
@@ -22,7 +26,9 @@ export class ContasPage {
         let modal = Modal.create(ModalContasPage);
 
         modal.onDismiss((data) => {
-            this.dao.insert(data);
+            this.dao.insert(data, (conta) => {
+                this.listContas.push(conta);
+            });
         });
 
         this.nav.present(modal);
@@ -32,13 +38,16 @@ export class ContasPage {
         let modal = Modal.create(ModalContasPage, {conta: conta});
 
         modal.onDismiss((data) => {
-            this.dao.edit(data);
+            this.dao.edit(data, (conta) => {});
         });
 
         this.nav.present(modal);
     }
 
     delete(conta) {
-        this.dao.delete(conta);
+        this.dao.delete(conta, (conta) => {
+            let pos = this.listContas.indexOf(conta);
+            this.listContas.splice(pos, 1);
+        });
     }
 }
